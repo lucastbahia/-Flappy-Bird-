@@ -83,7 +83,8 @@ nave_y = HEIGHT/2
 nave_r=10
 
 # Aceleração a cada frame
-ACELERACAO = 4
+ACELERACAO = 2
+
 
 print('aperte espaço para pular com a nave')
 
@@ -109,6 +110,7 @@ while game:
 
     # Gera saídas
     window.fill((255, 255, 255))  # Preenche com a cor branca
+    
 
     # Desenhando a bola na janela
     pygame.draw.circle(window, (255, 0, 0), (nave_x, nave_y), nave_r)
