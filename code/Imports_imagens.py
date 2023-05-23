@@ -98,7 +98,7 @@ while game:
             game = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                velocidade_da_nave_y = -10
+                velocidade_da_nave_y = -5
     # ----- Atualiza estado do jogo
     #aplicando a aceleração da gravidade
     velocidade_da_nave_y += ACELERACAO
@@ -108,9 +108,6 @@ while game:
     if nave_y -nave_r > HEIGHT:
         nave_y = HEIGHT - nave_r
 
-    # Gera saídas
-    window.fill((255, 255, 255))  # Preenche com a cor branca
-    
 
     # Desenhando a bola na janela
     pygame.draw.circle(window, (255, 0, 0), (nave_x, nave_y), nave_r)
