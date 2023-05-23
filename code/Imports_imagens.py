@@ -98,7 +98,7 @@ while game:
             game = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                velocidade_da_nave_y = -5
+                velocidade_da_nave_y = -20
     # ----- Atualiza estado do jogo
     #aplicando a aceleração da gravidade
     velocidade_da_nave_y += ACELERACAO
