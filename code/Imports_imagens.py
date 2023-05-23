@@ -65,22 +65,54 @@ class Estacao(pygame.sprite.Sprite):
 # Inicia estruturas de dados
 game = True
 
+relogio = pygame.time.Clock()
 # Carrega o fundo do jogo
 background = fundo_tela
 # Redimensiona o fundo
 background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 background_rect = background.get_rect()
 
+# ===== Loop principal =====
+#Velocidade inicial da bola
+vaelocidade_da_nave_x = 0
+velocidade_da_nave_y = 0
+
+#posição inicial da bola
+nave_x = (WIDTH/2)
+nave_y = HEIGHT/2
+nave_r=10
+
+# Aceleração a cada frame
+ACELERACAO = 4
+
+print('aperte espaço para pular com a nave')
+
 # Loop principal
 while game:
     # Trata eventos
+    relogio.tick(FPS)
     for event in pygame.event.get():
         # Verifica consequências
         if event.type == pygame.QUIT:
             game = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                velocidade_da_nave_y = -10
+    # ----- Atualiza estado do jogo
+    #aplicando a aceleração da gravidade
+    velocidade_da_nave_y += ACELERACAO
+    nave_y += velocidade_da_nave_y
+
+    # Como fazer a bolinha não cair??
+    if nave_y -nave_r > HEIGHT:
+        nave_y = HEIGHT - nave_r
 
     # Gera saídas
     window.fill((255, 255, 255))  # Preenche com a cor branca
+
+    # Desenhando a bola na janela
+    pygame.draw.circle(window, (255, 0, 0), (nave_x, nave_y), nave_r)
+    pygame.display.update()  # Mostra o novo frame para o jogador
 
     # Atualiza a posição da imagem de fundo.
     background_rect.x += world_speed
