@@ -91,6 +91,10 @@ nave_r=10
 # Aceleração a cada frame
 ACELERACAO = 2
 
+#tempo inicial
+score=0
+tempo_inicial = pygame.time.get_ticks()
+
 
 print('aperte espaço para pular com a nave')
 
@@ -105,6 +109,8 @@ while game:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 velocidade_da_nave_y = -20
+        tempo_atual = pygame.time.get_ticks()
+        tempo_decorrido = (tempo_atual - tempo_inicial) // 1000  # Converte para segundos
     # ----- Atualiza estado do jogo
     #aplicando a aceleração da gravidade
     velocidade_da_nave_y += ACELERACAO
@@ -137,8 +143,8 @@ while game:
     window.blit(nave, (nave_x, nave_y))
 
     # Desenhando o score
-    score=0
-    text_surface =score_font.render("{:08d}".format(score), True, (255, 255, 0))
+    score = tempo_decorrido
+    text_surface =score_font.render("{:05d}".format(score), True, (255, 255, 0))
     text_rect = text_surface.get_rect()
     text_rect.midtop = (WIDTH / 2,  10)
     window.blit(text_surface, text_rect)
