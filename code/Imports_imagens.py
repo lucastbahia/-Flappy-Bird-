@@ -112,7 +112,8 @@ while game:
     # Como fazer a bolinha não cair??
     if nave_y +50 > HEIGHT:
         nave_y = HEIGHT - 50
-    
+    if nave_y <= 0:
+        nave_y = 0
 
 
     
