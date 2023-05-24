@@ -19,6 +19,7 @@ meteoro1 = pygame.image.load('../images/meteoro1.jpeg').convert_alpha()
 meteoro2 = pygame.image.load('../images/meteoro2.png').convert_alpha()
 buraco_minhoca = pygame.image.load('../images/buraco_minhoca.png').convert_alpha()
 game_over = pygame.image.load('../images/game_over.png').convert_alpha()
+score_font = pygame.font.Font('../font/PressStart2P.ttf', 28)
 
 #tamanho da nava
 nave_WIDTH = 50
@@ -115,7 +116,6 @@ while game:
     if nave_y <= 0:
         nave_y = 0
 
-
     
 
     # Atualiza a posição da imagem de fundo.
@@ -135,6 +135,13 @@ while game:
     
     # Desenhando a nave na janela
     window.blit(nave, (nave_x, nave_y))
+
+    # Desenhando o score
+    score=0
+    text_surface =score_font.render("{:08d}".format(score), True, (255, 255, 0))
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (WIDTH / 2,  10)
+    window.blit(text_surface, text_rect)
 
     # Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
