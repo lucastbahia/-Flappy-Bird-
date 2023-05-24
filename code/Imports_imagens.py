@@ -20,6 +20,11 @@ meteoro2 = pygame.image.load('../images/meteoro2.png').convert_alpha()
 buraco_minhoca = pygame.image.load('../images/buraco_minhoca.png').convert_alpha()
 game_over = pygame.image.load('../images/game_over.png').convert_alpha()
 
+#tamanho da nava
+nave_WIDTH = 50
+nave_HEIGHT = 38
+nave = pygame.transform.scale(nave_espacial, (nave_WIDTH, nave_HEIGHT))
+
        
 class Nave(pygame.sprite.Sprite):
     def __init__(self):
@@ -105,13 +110,12 @@ while game:
     nave_y += velocidade_da_nave_y
 
     # Como fazer a bolinha não cair??
-    if nave_y -nave_r > HEIGHT:
-        nave_y = HEIGHT - nave_r
+    if nave_y +50 > HEIGHT:
+        nave_y = HEIGHT - 50
+    
 
 
-    # Desenhando a bola na janela
-    window.blit(nave_espacial, (nave_x, nave_y))
-    pygame.display.update()  # Mostra o novo frame para o jogador
+    
 
     # Atualiza a posição da imagem de fundo.
     background_rect.x += world_speed
@@ -126,6 +130,10 @@ while game:
     background_rect2 = background_rect.copy()
     background_rect2.x += background_rect2.width
     window.blit(background, background_rect2)
+
+    
+    # Desenhando a nave na janela
+    window.blit(nave, (nave_x, nave_y))
 
     # Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
