@@ -11,7 +11,7 @@ pygame.display.set_caption('Hello World!')
 
 # Importando as imagens:
 game_on = pygame.image.load('../images/game_on.png').convert_alpha()
-nave_espacial = pygame.image.load('../images/nave_espacial.jpg').convert_alpha()
+nave_espacial = pygame.image.load('https://png.pngtree.com/png-vector/20210522/ourmid/pngtree-alien-spaceships-ufo-with-blue-beam-scifi-abduction-illustration-png-image_3336569.jpg').convert_alpha()
 buraco_negro = pygame.image.load('../images/buraco_negro.jpg').convert_alpha()
 estacao_espacial = pygame.image.load('../images/estacao_espacial.jpg').convert_alpha()
 fundo_tela = pygame.image.load('../images/fundo_tela.png').convert_alpha()
