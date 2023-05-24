@@ -110,7 +110,7 @@ while game:
 
 
     # Desenhando a bola na janela
-    pygame.draw.circle(window, (255, 0, 0), (nave_x, nave_y), nave_r)
+    window.blit(nave_espacial, (nave_x, nave_y))
     pygame.display.update()  # Mostra o novo frame para o jogador
 
     # Atualiza a posição da imagem de fundo.
