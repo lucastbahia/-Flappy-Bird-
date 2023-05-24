@@ -83,7 +83,7 @@ vaelocidade_da_nave_x = 0
 velocidade_da_nave_y = 0
 
 #posição inicial da bola
-nave_x = (WIDTH/2)
+nave_x = (WIDTH/3.5)
 nave_y = HEIGHT/2
 nave_r=10
 
@@ -110,8 +110,8 @@ while game:
     nave_y += velocidade_da_nave_y
 
     # Como fazer a bolinha não cair??
-    if nave_y +50 > HEIGHT:
-        nave_y = HEIGHT - 50
+    if nave_y +40 > HEIGHT:
+        nave_y = HEIGHT - 40
     if nave_y <= 0:
         nave_y = 0
 
