@@ -1,7 +1,9 @@
 # Inicialização 
 # Importa e inicia pacotes
+from typing import Any
 import pygame
 from variaveis import *
+import random
 
 pygame.init()
 
@@ -26,6 +28,10 @@ nave_WIDTH = 50
 nave_HEIGHT = 38
 nave = pygame.transform.scale(nave_espacial, (nave_WIDTH, nave_HEIGHT))
 
+#Tempo inicial
+score=0
+tempo_inicial = pygame.time.get_ticks()
+
        
 class Nave(pygame.sprite.Sprite):
     def __init__(self):
@@ -33,16 +39,54 @@ class Nave(pygame.sprite.Sprite):
 
         self.image = nave_espacial
         self.rect = self.image.get_rect()
+
+        self.rect.x = WIDTH
+        self.rect.y = random.randint(0,HEIGHT)
+        self.speedx = random.randint(2, 10)
+        self.speedy = 0
+
+    def update(self):
+        # Atualizando a posição do meteoro
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        # Se o meteoro passar do final da tela, volta para cima e sorteia
+        # novas posições e velocidades
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+            self.rect.x = WIDTH
+            self.rect.y = random.randint(0,HEIGHT)
+            self.speedx = random.randint(2, 10)
+            self.speedy = 0
+        if score % 10 == 0:
+            self.speedx *= 1.5
         
 class Buracos(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = img
-        self.rect = self.image.get_rect()
+        self.rectt = self.image.get_rect()
+        self.rect.x = WIDTH
+        self.rect.y = random.randint(0,HEIGHT)
+        self.speedx = random.randint(2, 10)
+        self.speedy = 0
 
-black_hole = Buracos(buraco_negro)
-minhoca = Buracos(buraco_minhoca)
+    def update(self):
+        # Atualizando a posição do meteoro
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        # Se o meteoro passar do final da tela, volta para cima e sorteia
+        # novas posições e velocidades
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+            self.rect.x = WIDTH
+            self.rect.y = random.randint(0,HEIGHT)
+            self.speedx = random.randint(2, 10)
+            self.speedy = 0
+        if score % 10 == 0:
+            self.speedx *= 1.5
+
+        
+buraco1 = Buracos(buraco_negro)
+buraco2 = Buracos(buraco_minhoca)
 
 class Meteoros(pygame.sprite.Sprite):
     def __init__(self, img):
@@ -51,17 +95,57 @@ class Meteoros(pygame.sprite.Sprite):
         self.image = img
         self.rect = self.image.get_rect()
 
-meteoro_brilhante=Meteoros(meteoro1)
-meteoro=Meteoros(meteoro2)
+        self.rect.x = WIDTH
+        self.rect.y = random.randint(0,HEIGHT)
+        self.speedx = random.randint(2, 10)
+        self.speedy = 0
+
+    def update(self):
+        # Atualizando a posição do meteoro
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        # Se o meteoro passar do final da tela, volta para cima e sorteia
+        # novas posições e velocidades
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+            self.rect.x = WIDTH
+            self.rect.y = random.randint(0,HEIGHT)
+            self.speedx = random.randint(2, 10)
+            self.speedy = 0
+        if score % 10 == 0:
+            self.speedx *= 1.5
+
+meteoro1 = Meteoros(meteoro1)
+meteoro2 = Meteoros(meteoro2)
+
+
 
 class Estacao(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = estacao_espacial
+        self.image = img
         self.rect = self.image.get_rect()
 
+        self.rect.x = WIDTH
+        self.rect.y = random.randint(0,HEIGHT)
+        self.speedx = random.randint(2, 10)
+        self.speedy = 0
 
+    def update(self):
+        # Atualizando a posição do meteoro
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        # Se o meteoro passar do final da tela, volta para cima e sorteia
+        # novas posições e velocidades
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+            self.rect.x = WIDTH
+            self.rect.y = random.randint(0,HEIGHT)
+            self.speedx = random.randint(2, 10)
+            self.speedy = 0
+        if score % 10 == 0:
+            self.speedx *= 1.5
+estacao1 = Estacao(estacao_espacial)
+estacao2 = Estacao(estacao_espacial)
 # # Importando os sons:
 # pygame.mixer.music.load('assets/snd/tgfcoder-FrozenJam-SeamlessLoop.ogg')
 # pygame.mixer.music.set_volume(0.4)
@@ -79,11 +163,11 @@ background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 background_rect = background.get_rect()
 
 # ===== Loop principal =====
-#Velocidade inicial da bola
+#Velocidade inicial da nave
 vaelocidade_da_nave_x = 0
 velocidade_da_nave_y = 0
 
-#posição inicial da bola
+#posição inicial da nave
 nave_x = (WIDTH/3.5)
 nave_y = HEIGHT/2
 nave_r=10
@@ -91,15 +175,19 @@ nave_r=10
 # Aceleração a cada frame
 ACELERACAO = 2
 
-#tempo inicial
-score=0
-tempo_inicial = pygame.time.get_ticks()
-
 
 print('aperte espaço para pular com a nave')
 
 # Loop principal
 while game:
+    # Atualiza posições dos meteoros, estacoes e buracos:
+    meteoro1.update()
+    meteoro2.update()
+    buraco1.update()
+    buraco2.update()
+    estacao1.update()
+    estacao2.update()
+
     # Trata eventos
     relogio.tick(FPS)
     for event in pygame.event.get():
@@ -116,7 +204,7 @@ while game:
     velocidade_da_nave_y += ACELERACAO
     nave_y += velocidade_da_nave_y
 
-    # Como fazer a bolinha não cair??
+    # Como fazer a nave não cair??
     if nave_y +40 > HEIGHT:
         nave_y = HEIGHT - 40
     if nave_y <= 0:
