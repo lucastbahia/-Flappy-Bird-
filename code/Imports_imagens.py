@@ -10,7 +10,7 @@ pygame.init()
 
 # Gera tela principal
 window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('Hello World!')
+pygame.display.set_caption('Flappy Ship')
 
 # Importando as imagens:
 assets = dict()
