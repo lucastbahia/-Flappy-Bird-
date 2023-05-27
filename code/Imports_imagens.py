@@ -2,6 +2,7 @@
 # Importa e inicia pacotes
 from typing import Any
 import pygame
+import time
 from variaveis import *
 import random
 
@@ -29,7 +30,7 @@ assets['score_font'] = pygame.font.Font('../font/PressStart2P.ttf', 28)
 # batida = pygame.mixer.Sound('../sons/batida.mp3')
 # fundo= pygame.mixer.Sound('../sons/fundo.mp3')
 
-#tamanho da nava
+#tamanho da nave
 nave_WIDTH = 50
 nave_HEIGHT = 38
 nave = pygame.transform.scale(assets['nave_espacial'], (nave_WIDTH, nave_HEIGHT))
@@ -40,28 +41,12 @@ tempo_inicial = pygame.time.get_ticks()
 
        
 class Nave(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = assets['nave_espacial']
         self.rect = self.image.get_rect()
 
-        self.rect.x = WIDTH
-        self.rect.y = random.randint(0,HEIGHT)
-        self.speedx = - random.randint(2, 10)
-
-    def update(self):
-        # Atualizando a posição do meteoro
-        self.rect.x += self.speedx
-        # Se o meteoro passar do final da tela, volta para cima e sorteia
-        # novas posições e velocidades
-        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
-            self.rect.x = WIDTH
-            self.rect.y = random.randint(0,HEIGHT)
-            self.speedx = - random.randint(2, 10)
-
-        if score % 10 == 0:
-            self.speedx *= 1.5
         
 class Buracos_(pygame.sprite.Sprite):
     def __init__(self, img):
@@ -72,12 +57,10 @@ class Buracos_(pygame.sprite.Sprite):
         self.rect.x = WIDTH
         self.rect.y = random.randint(0,HEIGHT)
         self.speedx = - random.randint(2, 10)
-        self.speedy = 0
 
     def update(self):
-        # Atualizando a posição do meteoro
+        # Atualizando a posição do buraco
         self.rect.x += self.speedx
-        self.rect.y += self.speedy
         # Se o meteoro passar do final da tela, volta para cima e sorteia
         # novas posições e velocidades
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
@@ -124,10 +107,10 @@ meteoro2 = Meteoros(assets['meteoro2'])
 
 
 class Estacao(pygame.sprite.Sprite):
-    def __init__(self, img):
+    def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = img
+        self.image = assets['estacao_espacial']
         self.rect = self.image.get_rect()
 
         self.rect.x = WIDTH
@@ -163,6 +146,10 @@ objetos = {}
 objetos['buracos'] = buracos
 objetos['estacoes'] = estacoes
 objetos['meteoros'] = meteoros
+
+#Criando jogador
+player = Nave(assets)
+todos_objetos.add(player)
 
 # Adicionando objetos para os grupos
 for i in range(2):
@@ -203,12 +190,9 @@ print('aperte espaço para pular com a nave')
 # Loop principal
 while game:
     # Atualiza posições dos meteoros, estacoes e buracos:
-    meteoro1.update()
-    meteoro2.update()
-    buraco1.update()
-    buraco2.update()
-    estacao1.update()
-    estacao2.update()
+    meteoros.update()
+    estacoes.update()
+    buracos.update()
 
     # Trata eventos
     relogio.tick(FPS)
@@ -221,6 +205,7 @@ while game:
                 velocidade_da_nave_y = -20
         tempo_atual = pygame.time.get_ticks()
         tempo_decorrido = (tempo_atual - tempo_inicial) // 1000  # Converte para segundos
+    
     # ----- Atualiza estado do jogo
     #aplicando a aceleração da gravidade
     velocidade_da_nave_y += ACELERACAO
@@ -232,17 +217,28 @@ while game:
     if nave_y <= 0:
         nave_y = 0
 
+    #Verifica batidas
+    hits = pygame.sprite.spritecollide(nave, meteoros, True)
+    hits.append(pygame.sprite.spritecollide(nave, estacoes, True))
+    hits.append(pygame.sprite.spritecollide(nave, buracos, True))
+    if len(hits) > 0:
+        time.sleep(1)
+        game = False
+
 
 
     # Atualiza a posição da imagem de fundo.
     background_rect.x += world_speed
+
     # Se o fundo saiu da janela, faz ele voltar para dentro.
     if background_rect.right < 0:
         background_rect.x += background_rect.width
+
     # Desenha o fundo e uma cópia para a direita.
     # Assumimos que a imagem selecionada ocupa pelo menos o tamanho da janela.
     # Além disso, ela deve ser cíclica, ou seja, o lado esquerdo deve ser continuação do direito.
     window.blit(background, background_rect)
+
     # Desenhamos a imagem novamente, mas deslocada da largura da imagem em x.
     background_rect2 = background_rect.copy()
     background_rect2.x += background_rect2.width
