@@ -53,7 +53,7 @@ class Buracos_(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = img
-        self.rectt = self.image.get_rect()
+        self.rect = self.image.get_rect()
         self.rect.x = WIDTH
         self.rect.y = random.randint(0,HEIGHT)
         self.speedx = - random.randint(2, 10)
