@@ -74,8 +74,6 @@ class Buracos_(pygame.sprite.Sprite):
             self.rect.y = random.randint(0,HEIGHT)
             self.speedx = - random.randint(2, 10)
             self.speedy = 0
-        if score % 10 == 0:
-            self.speedx *= 1.5
 
 buraco1 = Buracos_(assets['buraco_negro'])
 buraco2 = Buracos_(assets['buraco_minhoca'])
@@ -94,6 +92,7 @@ class Meteoros(pygame.sprite.Sprite):
         self.speedy = 0
 
     def update(self):
+        # print(self.rect.x)
         # Atualizando a posição do meteoro
         self.rect.x += self.speedx
         self.rect.y += self.speedy
@@ -104,8 +103,7 @@ class Meteoros(pygame.sprite.Sprite):
             self.rect.y = random.randint(0, HEIGHT)
             self.speedx = - random.randint(2, 10)
             self.speedy = 0
-        if score % 10 == 0:
-            self.speedx *= 1.5
+
 
 meteoro1=Meteoros(assets['meteoro1'])
 meteoro2=Meteoros(assets['meteoro2'])
@@ -134,8 +132,6 @@ class Estacao(pygame.sprite.Sprite):
             self.rect.y = random.randint(0,HEIGHT)
             self.speedx = - random.randint(2, 10)
             self.speedy = 0
-        if score % 10 == 0:
-            self.speedx *= 1.5
 
 estacao1 = Estacao(assets)
 estacao2 = Estacao(assets)
@@ -186,18 +182,18 @@ objetos['estacoes'] = estacoes
 objetos['meteoros'] = meteoros
 
 # #Criando jogador
-player = Nave(assets, nave_x, nave_y)
-todos_objetos.add(player)
+# player = Nave(assets, nave_x, nave_y)
+# todos_objetos.add(player)
 
 # # Adicionando objetos para os grupos
 # for i in range(2):
 
-meteoros.add(meteoro1)
-meteoros.add(meteoro2)
-estacoes.add(estacao1)
-estacoes.add(estacao2)
-buracos.add(buraco1)
-buracos.add(buraco2)
+todos_objetos.add(meteoro1)
+todos_objetos.add(meteoro2)
+todos_objetos.add(estacao1)
+todos_objetos.add(estacao2)
+todos_objetos.add(buraco1)
+todos_objetos.add(buraco2)
 
 
 
@@ -261,6 +257,26 @@ while game:
 
     # Desenhando a nave na janela
     window.blit(nave, (nave_x, nave_y))
+
+    # Desenhando os objetos:
+    todos_objetos.update()
+    todos_objetos.draw(window)
+
+    posicao_nave = nave.get_rect()
+    posicao_nave = posicao_nave.move(nave_x, nave_y)
+    is_hit = [posicao_nave.colliderect(meteoro1.rect)]
+    is_hit.append(posicao_nave.colliderect(meteoro2.rect))
+    is_hit.append(posicao_nave.colliderect(estacao1.rect))
+    is_hit.append(posicao_nave.colliderect(estacao2.rect))
+    is_hit.append(posicao_nave.colliderect(estacao2.rect))
+    is_hit.append(posicao_nave.colliderect(buraco1.rect))
+    is_hit.append(posicao_nave.colliderect(buraco2.rect))
+    for hit in is_hit:
+        if hit:
+            game = False
+    
+    # for meteoro in meteoros:
+    #     window.bilt(meteoro)
     # todos_objetos.update()
     # todos_objetos.draw(window)
 
