@@ -6,4 +6,5 @@ world_speed = -3 #Velocidade do mundo
 # Estados para controle do fluxo da aplicação
 INIT = 0
 GAME = 1
-QUIT = 2
+GAME_OVER = 2
+QUIT = 3

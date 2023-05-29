@@ -5,6 +5,7 @@ from variaveis import *
 import random
 
 pygame.init()
+pygame.mixer.init()
 
 # Gera tela principal
 window = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -20,10 +21,34 @@ assets['fundo_tela'] = pygame.image.load('../images/fundo_tela.png').convert_alp
 assets['meteoro1'] = pygame.image.load('../images/meteoro1.png').convert_alpha()
 assets['meteoro2'] = pygame.image.load('../images/meteoro2.png').convert_alpha()
 assets['buraco_minhoca'] = pygame.image.load('../images/buraco_minhoca.png').convert_alpha()
-assets['game_over'] = pygame.image.load('../images/game_over.png').convert_alpha()
+assets['game_over'] = pygame.image.load('../images/game_over.jpg').convert_alpha()
 assets['score_font'] = pygame.font.Font('../font/PressStart2P.ttf', 28)
 
-#tamanho da nava
+# ----- Inicia estruturas de dados
+game = True
+
+# ===== Loop principal =====
+while game:
+    # Carrega o fundo do jogo
+    background = assets['game_over']
+    # Redimensiona o fundo
+    background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+    background_rect = background.get_rect()
+    window.blit(background, background_rect)
+
+    # ----- Trata eventos
+    for event in pygame.event.get():
+        # ----- Verifica consequências
+        if event.type == pygame.QUIT:
+            game = False
+
+    # ----- Atualiza estado do jogo
+    pygame.display.update() 
+
+import time
+time.sleep(1)
+
+# Tamanho da nava
 nave_WIDTH = 50
 nave_HEIGHT = 38
 nave = pygame.transform.scale(assets['nave_espacial'], (nave_WIDTH, nave_HEIGHT))
@@ -50,8 +75,6 @@ class Nave(pygame.sprite.Sprite):
     #         self.rect.y = HEIGHT - 40
     #     if self.rect.y <= 0:
     #         self.rect.y = 0
-
-
         
 class Buracos_(pygame.sprite.Sprite):
     def __init__(self, img):
@@ -136,12 +159,10 @@ class Estacao(pygame.sprite.Sprite):
 estacao1 = Estacao(assets)
 estacao2 = Estacao(assets)
 
-
-# # Importando os sons:
-# pygame.mixer.music.load('assets/snd/tgfcoder-FrozenJam-SeamlessLoop.ogg')
-# pygame.mixer.music.set_volume(0.4)
-# batida = pygame.mixer.Sound('../sons/batida.mp3')
-# fundo= pygame.mixer.Sound('../sons/fundo.mp3')
+# Importando os sons:
+pygame.mixer.music.load('../sons/fundo.mp3')
+pygame.mixer.music.set_volume(0.4)
+batida = pygame.mixer.Sound('../sons/batida.mp3')
 
 # Inicia estruturas de dados
 game = True
@@ -195,8 +216,6 @@ todos_objetos.add(estacao2)
 todos_objetos.add(buraco1)
 todos_objetos.add(buraco2)
 
-
-
 # Loop principal
 while game:
 
@@ -229,8 +248,6 @@ while game:
     if nave_y <= 0:
         nave_y = 0
 
-    
-
     # Atualiza a posição da imagem de fundo.
     background_rect.x += world_speed
     # Se o fundo saiu da janela, faz ele voltar para dentro.
@@ -244,9 +261,6 @@ while game:
     background_rect2 = background_rect.copy()
     background_rect2.x += background_rect2.width
     window.blit(background, background_rect2)
-
-    
-    
 
     # Desenhando o score
     score = tempo_decorrido
@@ -273,8 +287,9 @@ while game:
     is_hit.append(posicao_nave.colliderect(buraco2.rect))
     for hit in is_hit:
         if hit:
+            # tela = 'Game over'
             game = False
-    
+
     # for meteoro in meteoros:
     #     window.bilt(meteoro)
     # todos_objetos.update()
@@ -282,6 +297,27 @@ while game:
 
     # Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
+
+# ----- Inicia estruturas de dados
+game = True
+
+# ===== Loop principal =====
+while game:
+    # Carrega o fundo do jogo
+    background = assets['fundo_tela']
+    # Redimensiona o fundo
+    background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+    background_rect = background.get_rect()
+    window.blit(background, background_rect)
+
+    # ----- Trata eventos
+    for event in pygame.event.get():
+        # ----- Verifica consequências
+        if event.type == pygame.QUIT:
+            game = False
+
+    # ----- Atualiza estado do jogo
+    pygame.display.update() 
 
 # Finalização 
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
