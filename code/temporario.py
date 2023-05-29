@@ -13,7 +13,7 @@ pygame.display.set_caption('Hello World!')
 
 # Importando as imagens:
 assets = dict()
-assets['game_on'] = pygame.image.load('../images/game_on.png').convert_alpha()
+assets['game_on'] = pygame.image.load('../images/game_on.jpg').convert_alpha()
 assets['nave_espacial'] = pygame.image.load('../images/nave_espacial.png').convert_alpha()
 assets['buraco_negro'] = pygame.image.load('../images/buraco_negro.png').convert_alpha()
 assets['estacao_espacial'] = pygame.image.load('../images/estacao_espacial.png').convert_alpha()
@@ -30,7 +30,7 @@ game = True
 # ===== Loop principal =====
 while game:
     # Carrega o fundo do jogo
-    background = assets['game_over']
+    background = assets['game_on']
     # Redimensiona o fundo
     background = pygame.transform.scale(background, (WIDTH, HEIGHT))
     background_rect = background.get_rect()
@@ -304,7 +304,7 @@ game = True
 # ===== Loop principal =====
 while game:
     # Carrega o fundo do jogo
-    background = assets['fundo_tela']
+    background = assets['game_over']
     # Redimensiona o fundo
     background = pygame.transform.scale(background, (WIDTH, HEIGHT))
     background_rect = background.get_rect()
