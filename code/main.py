@@ -16,7 +16,7 @@ pygame.display.set_caption('Flappy Ship')
 # Importando as imagens:
 assets = dict()
 assets['game_on'] = pygame.image.load('../images/game_on.png').convert_alpha()
-assets['nave_espacial'] = pygame.image.load('../images/nave.png').convert_alpha()
+assets['nave_espacial'] = pygame.image.load('../images/nave_espacial.png').convert_alpha()
 assets['buraco_negro'] = pygame.image.load('../images/buraco_negro.png').convert_alpha()
 assets['estacao_espacial'] = pygame.image.load('../images/estacao_espacial.png').convert_alpha()
 assets['fundo_tela'] = pygame.image.load('../images/fundo_tela.png').convert_alpha()
@@ -27,7 +27,7 @@ assets['game_over'] = pygame.image.load('../images/game_over.png').convert_alpha
 assets['score_font'] = pygame.font.Font('../font/PressStart2P.ttf', 28)
 
 # Importando os sons:
-pygame.mixer.music.load('assets/snd/fundo.mp3')
+pygame.mixer.music.load('../sons/fundo.mp3')
 pygame.mixer.music.set_volume(0.4)
 batida = pygame.mixer.Sound('../sons/batida.mp3')
 
@@ -133,8 +133,8 @@ class Estacao(pygame.sprite.Sprite):
             self.speedy = 0
         if score % 10 == 0:
             self.speedx *= 1.5
-estacao1 = Estacao(assets['estacao_espacial'])
-estacao2 = Estacao(assets['estacao_espacial'])
+estacao1 = Estacao(assets)
+estacao2 = Estacao(assets)
 
 
 # Crinado variaveis para conseguir verificar a colisão
@@ -191,10 +191,8 @@ print('aperte espaço para pular com a nave')
 
 # Loop principal
 while game:
-    # Atualiza posições dos meteoros, estacoes e buracos:
-    meteoros.update()
-    estacoes.update()
-    buracos.update()
+    print("Oi")
+    
 
     # Trata eventos
     relogio.tick(FPS)
@@ -220,9 +218,9 @@ while game:
         nave_y = 0
 
     #Verifica batidas
-    hits = pygame.sprite.spritecollide(nave, meteoros, True)
-    hits.append(pygame.sprite.spritecollide(nave, estacoes, True))
-    hits.append(pygame.sprite.spritecollide(nave, buracos, True))
+    hits = pygame.sprite.spritecollide(player, meteoros, True)
+    hits.append(pygame.sprite.spritecollide(player, estacoes, True))
+    hits.append(pygame.sprite.spritecollide(player, buracos, True))
     if len(hits) > 0:
         batida.play
         time.sleep(1)
@@ -257,6 +255,11 @@ while game:
     text_rect = text_surface.get_rect()
     text_rect.midtop = (WIDTH / 2,  10)
     window.blit(text_surface, text_rect)
+
+    # Atualiza posições dos meteoros, estacoes e buracos:
+    meteoros.update()
+    estacoes.update()
+    buracos.update()
 
     # Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
