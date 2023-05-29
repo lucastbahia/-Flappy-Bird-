@@ -7,6 +7,7 @@ from variaveis import *
 import random
 
 pygame.init()
+pygame.mixer.init()
 
 # Gera tela principal
 window = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -16,19 +17,20 @@ pygame.display.set_caption('Flappy Ship')
 assets = dict()
 assets['game_on'] = pygame.image.load('../images/game_on.png').convert_alpha()
 assets['nave_espacial'] = pygame.image.load('../images/nave.png').convert_alpha()
-assets['buraco_negro'] = pygame.image.load('../images/buraco_negro.jpg').convert_alpha()
-assets['estacao_espacial'] = pygame.image.load('../images/estacao_espacial.jpg').convert_alpha()
+assets['buraco_negro'] = pygame.image.load('../images/buraco_negro.png').convert_alpha()
+assets['estacao_espacial'] = pygame.image.load('../images/estacao_espacial.png').convert_alpha()
 assets['fundo_tela'] = pygame.image.load('../images/fundo_tela.png').convert_alpha()
-assets['meteoro1'] = pygame.image.load('../images/meteoro1.jpeg').convert_alpha()
+assets['meteoro1'] = pygame.image.load('../images/meteoro1.png').convert_alpha()
 assets['meteoro2'] = pygame.image.load('../images/meteoro2.png').convert_alpha()
 assets['buraco_minhoca'] = pygame.image.load('../images/buraco_minhoca.png').convert_alpha()
 assets['game_over'] = pygame.image.load('../images/game_over.png').convert_alpha()
 assets['score_font'] = pygame.font.Font('../font/PressStart2P.ttf', 28)
-# # Importando os sons:
-# pygame.mixer.music.load('assets/snd/tgfcoder-FrozenJam-SeamlessLoop.ogg')
-# pygame.mixer.music.set_volume(0.4)
-# batida = pygame.mixer.Sound('../sons/batida.mp3')
-# fundo= pygame.mixer.Sound('../sons/fundo.mp3')
+
+# Importando os sons:
+pygame.mixer.music.load('assets/snd/fundo.mp3')
+pygame.mixer.music.set_volume(0.4)
+batida = pygame.mixer.Sound('../sons/batida.mp3')
+
 
 #tamanho da nave
 nave_WIDTH = 50
@@ -222,6 +224,7 @@ while game:
     hits.append(pygame.sprite.spritecollide(nave, estacoes, True))
     hits.append(pygame.sprite.spritecollide(nave, buracos, True))
     if len(hits) > 0:
+        batida.play
         time.sleep(1)
         game = False
 
@@ -257,6 +260,8 @@ while game:
 
     # Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
+    
+    # ----- Gera tela principal
 
 # Finalização 
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
