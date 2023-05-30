@@ -24,11 +24,16 @@ assets['buraco_minhoca'] = pygame.image.load('../images/buraco_minhoca.png').con
 assets['game_over'] = pygame.image.load('../images/game_over.jpg').convert_alpha()
 assets['score_font'] = pygame.font.Font('../font/PressStart2P.ttf', 28)
 
+# Importando os sons:
+batida = pygame.mixer.Sound('../sons/batida.mp3')
+fundo = pygame.mixer.Sound('../sons/fundo.mp3')
+
 # ----- Inicia estruturas de dados
 game = False
 
 # ===== Loop principal =====
 while not game:  # Não iniciar jogo, ate que ele sej verdadeiro
+    fundo.play()
     # Carrega o fundo do jogo
     background = assets['game_on']
     # Redimensiona o fundo
@@ -151,12 +156,6 @@ class Estacao(pygame.sprite.Sprite):
 
 estacao1 = Estacao(assets)
 estacao2 = Estacao(assets)
-
-# Importando os sons:
-pygame.mixer.music.load('../sons/fundo.mp3')
-pygame.mixer.music.set_volume(0.4)
-batida = pygame.mixer.Sound('../sons/batida.mp3')
-fundo = pygame.mixer.Sound('../sons/fundo.mp3')
 
 # Inicia estruturas de dados
 game = True
