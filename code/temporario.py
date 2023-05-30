@@ -13,7 +13,7 @@ pygame.display.set_caption('Hello World!')
 
 # Importando as imagens:
 assets = dict()
-assets['game_on'] = pygame.image.load('../images/game_on.jpg').convert_alpha()
+assets['game_on'] = pygame.image.load('../images/game_on.jpeg').convert_alpha()
 assets['nave_espacial'] = pygame.image.load('../images/nave_espacial.png').convert_alpha()
 assets['buraco_negro'] = pygame.image.load('../images/buraco_negro.png').convert_alpha()
 assets['estacao_espacial'] = pygame.image.load('../images/estacao_espacial.png').convert_alpha()
@@ -21,7 +21,7 @@ assets['fundo_tela'] = pygame.image.load('../images/fundo_tela.png').convert_alp
 assets['meteoro1'] = pygame.image.load('../images/meteoro1.png').convert_alpha()
 assets['meteoro2'] = pygame.image.load('../images/meteoro2.png').convert_alpha()
 assets['buraco_minhoca'] = pygame.image.load('../images/buraco_minhoca.png').convert_alpha()
-assets['game_over'] = pygame.image.load('../images/game_over.jpg').convert_alpha()
+assets['game_over'] = pygame.image.load('../images/game_over.jpeg').convert_alpha()
 assets['score_font'] = pygame.font.Font('../font/PressStart2P.ttf', 28)
 
 # Importando os sons:
