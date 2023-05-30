@@ -68,16 +68,6 @@ class Nave(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.velocidade_da_nave_y = 0
-
-    # def update(self):
-    #     self.velocidade_da_nave_y += ACELERACAO
-    #     self.rect.y += velocidade_da_nave_y
-
-    #     # Como fazer a bolinha não cair??
-    #     if self.rect.y +40 > HEIGHT:
-    #         self.rect.y = HEIGHT - 40
-    #     if self.rect.y <= 0:
-    #         self.rect.y = 0
         
 class Buracos_(pygame.sprite.Sprite):
     def __init__(self, img):
@@ -292,11 +282,6 @@ while game:
         if hit:
             # tela = 'Game over'
             game = False
-
-    # for meteoro in meteoros:
-    #     window.bilt(meteoro)
-    # todos_objetos.update()
-    # todos_objetos.draw(window)
 
     # Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
