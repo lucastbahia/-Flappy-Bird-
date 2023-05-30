@@ -33,7 +33,6 @@ game = False
 
 # ===== Loop principal =====
 while not game:  # Não iniciar jogo, ate que ele sej verdadeiro
-    fundo.play()
     # Carrega o fundo do jogo
     background = assets['game_on']
     # Redimensiona o fundo
@@ -63,6 +62,9 @@ nave = pygame.transform.scale(assets['nave_espacial'], (nave_WIDTH, nave_HEIGHT)
 
 # Aceleração a cada frame
 ACELERACAO = 2
+"""
+criando classes para todos os objetos do jogo
+"""
 class Nave(pygame.sprite.Sprite):
     def __init__(self, assets, x, y):
         pygame.sprite.Sprite.__init__(self)
@@ -181,7 +183,10 @@ nave_r=10
 score=0
 tempo_inicial = pygame.time.get_ticks()
 
-# Crinado variaveis para conseguir verificar a colisão
+"""
+ Crinado variaveis para conseguir verificar a colisão
+"""
+
 todos_objetos = pygame.sprite.Group()
 meteoros = pygame.sprite.Group()
 estacoes = pygame.sprite.Group()
@@ -193,13 +198,6 @@ objetos['buracos'] = buracos
 objetos['estacoes'] = estacoes
 objetos['meteoros'] = meteoros
 
-# #Criando jogador
-# player = Nave(assets, nave_x, nave_y)
-# todos_objetos.add(player)
-
-# # Adicionando objetos para os grupos
-# for i in range(2):
-
 todos_objetos.add(meteoro1)
 todos_objetos.add(meteoro2)
 todos_objetos.add(estacao1)
@@ -207,19 +205,18 @@ todos_objetos.add(estacao2)
 todos_objetos.add(buraco1)
 todos_objetos.add(buraco2)
 
-# Loop principal
+"""
+Loop principal
+"""
+
+
 while game:
 
     # Adiciona som de fundo
     fundo.play()
 
     # Updates
-    meteoro1.update()
-    meteoro2.update()
-    estacao1.update()
-    estacao2.update()
-    buraco1.update()
-    buraco2.update()
+    todos_objetos.update()
 
     # Trata eventos
     relogio.tick(FPS)
@@ -267,8 +264,7 @@ while game:
     # Desenhando a nave na janela
     window.blit(nave, (nave_x, nave_y))
 
-    # Desenhando os objetos:
-    todos_objetos.update()
+    # Desenhando os objetos:  
     todos_objetos.draw(window)
 
     posicao_nave = nave.get_rect()
@@ -296,6 +292,9 @@ while game:
 game = True
 
 # ===== Loop principal =====
+"""
+tela game over
+"""
 while game:
     # Carrega o fundo do jogo
     background = assets['game_over']
