@@ -156,6 +156,7 @@ estacao2 = Estacao(assets)
 pygame.mixer.music.load('../sons/fundo.mp3')
 pygame.mixer.music.set_volume(0.4)
 batida = pygame.mixer.Sound('../sons/batida.mp3')
+fundo = pygame.mixer.Sound('../sons/fundo.mp3')
 
 # Inicia estruturas de dados
 game = True
@@ -176,8 +177,6 @@ velocidade_da_nave_y = 0
 nave_x = (WIDTH/3.5)
 nave_y = HEIGHT/2
 nave_r=10
-
-
 
 #tempo inicial
 score=0
@@ -212,6 +211,10 @@ todos_objetos.add(buraco2)
 # Loop principal
 while game:
 
+    # Adiciona som de fundo
+    fundo.play()
+
+    # Updates
     meteoro1.update()
     meteoro2.update()
     estacao1.update()
@@ -280,6 +283,10 @@ while game:
     is_hit.append(posicao_nave.colliderect(buraco2.rect))
     for hit in is_hit:
         if hit:
+            # parar de tocar som de fundo
+            fundo.stop()
+            # toca som batida
+            batida.play()
             # tela = 'Game over'
             game = False
 
