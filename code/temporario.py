@@ -25,10 +25,10 @@ assets['game_over'] = pygame.image.load('../images/game_over.jpg').convert_alpha
 assets['score_font'] = pygame.font.Font('../font/PressStart2P.ttf', 28)
 
 # ----- Inicia estruturas de dados
-game = True
+game = False
 
 # ===== Loop principal =====
-while game:
+while not game:  # Não iniciar jogo, ate que ele sej verdadeiro
     # Carrega o fundo do jogo
     background = assets['game_on']
     # Redimensiona o fundo
@@ -40,10 +40,13 @@ while game:
     for event in pygame.event.get():
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
-            game = False
+            game = True  #jogo verdadeiro
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                game = True  #jogo verdadeiro
 
     # ----- Atualiza estado do jogo
-    pygame.display.update() 
+    pygame.display.update()
 
 import time
 time.sleep(1)
