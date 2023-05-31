@@ -30,6 +30,7 @@ fundo = pygame.mixer.Sound('../sons/fundo.mp3')
 
 # ----- Inicia estruturas de dados
 game = False
+score = 0
 
 # ===== Loop principal =====
 while not game:  # Não iniciar jogo, ate que ele sej verdadeiro
@@ -85,7 +86,7 @@ class Buracos_(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = WIDTH
         self.rect.y = random.randint(0,HEIGHT)
-        self.speedx = - random.randint(2, 10)
+        self.speedx = - random.randint(2, 5) 
 
     def update(self):
         # Atualizando a posição do buraco
@@ -95,7 +96,7 @@ class Buracos_(pygame.sprite.Sprite):
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.rect.x = WIDTH
             self.rect.y = random.randint(0,HEIGHT)
-            self.speedx = - random.randint(2, 10)
+            self.speedx = - random.randint(2, 5) - score * 0.5
             self.speedy = 0
 
 buraco1 = Buracos_(assets['buraco_negro'])
@@ -111,7 +112,7 @@ class Meteoros(pygame.sprite.Sprite):
 
         self.rect.x = WIDTH
         self.rect.y = random.randint(0,HEIGHT)
-        self.speedx = random.randint(2, 10)
+        self.speedx = random.randint(2, 5)
         self.speedy = 0
 
     def update(self):
@@ -124,7 +125,7 @@ class Meteoros(pygame.sprite.Sprite):
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.rect.x = WIDTH
             self.rect.y = random.randint(0, HEIGHT)
-            self.speedx = - random.randint(2, 10)
+            self.speedx = - random.randint(2, 5) - score *0.5
             self.speedy = 0
 
 
@@ -141,7 +142,7 @@ class Estacao(pygame.sprite.Sprite):
 
         self.rect.x = WIDTH
         self.rect.y = random.randint(0,HEIGHT)
-        self.speedx = - random.randint(2, 10)
+        self.speedx = - random.randint(2, 5)
         self.speedy = 0
 
     def update(self):
@@ -153,7 +154,7 @@ class Estacao(pygame.sprite.Sprite):
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.rect.x = WIDTH
             self.rect.y = random.randint(0,HEIGHT)
-            self.speedx = - random.randint(2, 10)
+            self.speedx = - random.randint(2, 5) - score * 0.5
             self.speedy = 0
 
 estacao1 = Estacao(assets)
